@@ -1,0 +1,799 @@
+/**
+ * style.css - Realistic Book UI & Subtle Romantic Palette
+ * واجهة كتاب واقعي مع فهرس جانبي (30%) وصفحة كتاب مفتوحة (70%) وميزة المشاركة
+ */
+
+:root {
+  --bg-desk: #FAF7F2;          /* بيج فاتح جداً أو Off-White دافئ */
+  --bg-sidebar: #F5EFEB;       /* بيج ورقي هادئ للقائمة الجانبية */
+  --bg-sidebar-alt: #FAF5F0;   /* تدرج طفيف للبطاقات */
+  --bg-page: #FFFDFB;          /* ورق دافئ وناعم للصفحات */
+  --ink-primary: #2D2A28;      /* رمادي داكن ناعم للعناوين */
+  --ink-body: #3A3A3A;         /* رمادي داكن مريح للنصوص */
+  --ink-secondary: #6B645E;    /* نصوص فرعية هادئة */
+  --ink-muted: #9B948D;        /* تفاصيل رقيقة */
+  --dusty-rose: #B76E79;       /* وردي ترابي هادئ */
+  --dusty-rose-light: #C9A9A6; /* وردي ترابي فاتح */
+  --dusty-rose-soft: #F6EFF0;  /* خلفية وردية هادئة */
+  --dusty-rose-deep: #9E5762;  /* وردي ترابي داكن للتفاعل */
+  --crease: #E6DFD5;           /* طيات وكعب الكتاب */
+  --border-delicate: #EAE3D9;  /* حدود ناعمة */
+  --radius-casing: 16px;
+  --radius-btn: 10px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background-color: var(--bg-desk);
+  color: var(--ink-body);
+  line-height: 1.8;
+  direction: rtl;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+h1, h2, h3, h4, .font-literary, .book-cover-title, .page-entry-title, .error-title {
+  font-family: 'Amiri', serif;
+}
+
+.font-ui, input, textarea, button, select {
+  font-family: 'Tajawal', sans-serif;
+}
+
+/* الحاوية الكلية للكتاب */
+.book-viewport {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* شريط ترويسة وضع القارئ */
+.reader-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 4px 12px;
+  font-size: 0.9rem;
+  color: var(--ink-secondary);
+}
+
+.reader-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--ink-primary);
+}
+
+.print-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* رسالة الخطأ عند تلف الرابط */
+.reader-error-box {
+  background: var(--bg-page);
+  border: 1px solid var(--border-delicate);
+  border-radius: var(--radius-casing);
+  padding: 48px 24px;
+  text-align: center;
+  max-width: 500px;
+  margin: 60px auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.error-icon {
+  font-size: 2.4rem;
+  margin-bottom: 12px;
+}
+
+.error-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 8px;
+}
+
+.error-msg {
+  font-size: 0.9rem;
+  color: var(--ink-secondary);
+  line-height: 1.6;
+}
+
+/* الإطار الخارجي للكتاب الورقي المفتوح */
+.realistic-book-casing {
+  display: flex;
+  flex: 1;
+  min-height: 84vh;
+  background-color: var(--bg-page);
+  border-radius: var(--radius-casing);
+  border: 1px solid var(--border-delicate);
+  box-shadow: 
+    0 2px 6px rgba(45, 30, 35, 0.04),
+    0 12px 32px -4px rgba(45, 30, 35, 0.1),
+    0 24px 60px -12px rgba(45, 30, 35, 0.16);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ══════════════════════════════════════════════════
+   1. القسم الأيمن: فهرس الكتاب (Sidebar - 30%)
+   ══════════════════════════════════════════════════ */
+.book-index-sidebar {
+  width: 32%;
+  min-width: 280px;
+  max-width: 380px;
+  background-color: var(--bg-sidebar);
+  border-left: 1px solid var(--crease);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+.index-header {
+  padding: 24px 20px 16px;
+  border-bottom: 1px solid #E2D9CE;
+  background: rgba(235, 227, 220, 0.5);
+}
+
+.book-identity {
+  margin-bottom: 14px;
+}
+
+.book-cover-title {
+  font-family: 'Amiri', serif;
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  line-height: 1.3;
+}
+
+.book-cover-sub {
+  font-size: 0.85rem;
+  color: var(--ink-secondary);
+  margin-top: 2px;
+}
+
+.ribbon-add-btn {
+  width: 100%;
+  background-color: var(--dusty-rose);
+  color: #FFFFFF;
+  border: none;
+  padding: 11px 16px;
+  border-radius: var(--radius-btn);
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(183, 110, 121, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ribbon-add-btn:hover {
+  background-color: var(--dusty-rose-deep);
+  transform: translateY(-1px);
+}
+
+.index-search-box {
+  margin-top: 12px;
+  position: relative;
+}
+
+.index-search-box input {
+  width: 100%;
+  background: var(--bg-sidebar-alt);
+  border: 1px solid var(--crease);
+  border-radius: var(--radius-btn);
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  color: var(--ink-body);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  font-family: 'Cairo', sans-serif;
+}
+
+.index-search-box input:focus {
+  border-color: var(--dusty-rose-light);
+  background: #FFFFFF;
+}
+
+/* قائمة فصول الفهرس */
+.index-entries-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.index-entry-item {
+  padding: 12px 14px;
+  background: rgba(250, 246, 240, 0.6);
+  border: 1px solid transparent;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.index-entry-item:hover {
+  background: var(--bg-sidebar-alt);
+  border-color: #E2DAD0;
+}
+
+.index-entry-item.active {
+  background: #FFFFFF;
+  border-color: var(--crease);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.index-entry-item.active::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 0;
+  bottom: 10px;
+  width: 3.5px;
+  background-color: var(--dusty-rose);
+  border-radius: 4px 0 0 4px;
+}
+
+.index-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.index-item-date {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+}
+
+.chapter-share-btn {
+  background: none;
+  border: none;
+  color: var(--ink-muted);
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  transition: color 0.2s;
+}
+
+.chapter-share-btn:hover {
+  color: var(--dusty-rose);
+}
+
+.index-item-title {
+  font-family: 'Amiri', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  line-height: 1.35;
+}
+
+.index-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--crease);
+  background: rgba(235, 227, 220, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.index-util-btn {
+  background: none;
+  border: none;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.78rem;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.index-util-btn:hover {
+  color: var(--dusty-rose);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* ══════════════════════════════════════════════════
+   2. كعب الكتاب (Spine Crease)
+   ══════════════════════════════════════════════════ */
+.book-spine-gutter {
+  width: 14px;
+  background: linear-gradient(to right, rgba(50, 35, 40, 0.07) 0%, rgba(50, 35, 40, 0.02) 60%, transparent 100%);
+  border-right: 1px solid #E2D9CE;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════
+   3. القسم الأيسر: صفحات الكتاب (Pages Canvas - 70%)
+   ══════════════════════════════════════════════════ */
+.book-page-canvas {
+  flex: 1;
+  background-color: var(--bg-page);
+  padding: 44px 56px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.page-content-wrapper {
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* شريط ترويسة الصفحة */
+.page-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #EFE9E0;
+  margin-bottom: 24px;
+  font-size: 0.85rem;
+}
+
+.page-date {
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+
+.page-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.action-link {
+  background: none;
+  border: none;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.85rem;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.action-link:hover {
+  color: var(--dusty-rose);
+}
+
+.action-link.text-danger:hover {
+  color: #B91C1C;
+}
+
+/* عنوان الفصل */
+.page-entry-title {
+  font-family: 'Amiri', serif;
+  font-size: 2.35rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  text-align: center;
+  margin: 16px 0 12px;
+  line-height: 1.35;
+}
+
+.page-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 30px;
+  color: var(--dusty-rose);
+  opacity: 0.8;
+}
+
+.page-divider span {
+  width: 50px;
+  height: 1px;
+  background-color: #E2D9CE;
+}
+
+/* نص الفصل الأدبي */
+.page-entry-body {
+  font-family: 'Amiri', serif;
+  font-size: 1.35rem;
+  line-height: 2.25;
+  color: var(--ink-body);
+  white-space: pre-wrap;
+  text-align: justify;
+  margin-bottom: 40px;
+  user-select: text;
+}
+
+/* شريط أسفل الصفحة */
+.page-nav-bar {
+  padding-top: 24px;
+  border-top: 1px solid #EFE9E0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  margin-top: auto;
+}
+
+.page-turn-btn {
+  background: none;
+  border: none;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.85rem;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.page-turn-btn:hover:not(:disabled) {
+  color: var(--dusty-rose);
+}
+
+.page-turn-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* ══════════════════════════════════════════════════
+   4. وضع الكتابة والتحرير (Editor on Paper)
+   ══════════════════════════════════════════════════ */
+.paper-title-input {
+  font-family: 'Amiri', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  border: none;
+  border-bottom: 1px solid #E2D9CE;
+  background: transparent;
+  width: 100%;
+  padding: 10px 0;
+  outline: none;
+  margin-bottom: 20px;
+  transition: border-color 0.2s;
+}
+
+.paper-title-input:focus {
+  border-color: var(--dusty-rose);
+}
+
+.paper-body-textarea {
+  font-family: 'Amiri', serif;
+  font-size: 1.25rem;
+  line-height: 2.2;
+  color: var(--ink-body);
+  border: none;
+  background: transparent;
+  width: 100%;
+  min-height: 380px;
+  outline: none;
+  resize: vertical;
+  padding: 8px 0;
+}
+
+.editor-buttons-row {
+  padding-top: 20px;
+  border-top: 1px solid #EFE9E0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.btn-save-rose {
+  background-color: var(--dusty-rose);
+  color: #FFFFFF;
+  border: none;
+  padding: 9px 20px;
+  border-radius: var(--radius-btn);
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-save-rose:hover {
+  background-color: var(--dusty-rose-deep);
+}
+
+.btn-cancel {
+  background: transparent;
+  color: var(--ink-secondary);
+  border: none;
+  padding: 9px 16px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.btn-cancel:hover {
+  color: var(--ink-primary);
+}
+
+.autosave-tag {
+  color: var(--dusty-rose);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* ══════════════════════════════════════════════════
+   5. نوافذ المشاركة (Share Modal)
+   ══════════════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(45, 35, 38, 0.45);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+}
+
+.modal-card {
+  background: var(--bg-page);
+  border: 1px solid var(--crease);
+  border-radius: var(--radius-casing);
+  width: 100%;
+  max-width: 540px;
+  padding: 28px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #EFE9E0;
+}
+
+.modal-title {
+  font-family: 'Amiri', serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--ink-muted);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.share-info-box {
+  background-color: var(--bg-desk);
+  border: 1px solid var(--border-delicate);
+  border-radius: var(--radius-btn);
+  padding: 12px 14px;
+  font-size: 0.82rem;
+  color: var(--ink-secondary);
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.share-input-group {
+  margin-bottom: 18px;
+}
+
+.share-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  margin-bottom: 6px;
+}
+
+.share-url-field {
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid var(--crease);
+  border-radius: var(--radius-btn);
+  padding: 10px 12px;
+  font-size: 0.78rem;
+  color: var(--ink-body);
+  direction: ltr;
+  font-family: monospace;
+  outline: none;
+}
+
+.share-url-field:focus {
+  border-color: var(--dusty-rose-light);
+}
+
+.share-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-copy-rose {
+  flex: 1;
+  background-color: var(--dusty-rose);
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 16px;
+  border-radius: var(--radius-btn);
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-copy-rose:hover {
+  background-color: var(--dusty-rose-deep);
+}
+
+.btn-whatsapp {
+  flex: 1;
+  background-color: #25D366;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 16px;
+  border-radius: var(--radius-btn);
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-whatsapp:hover {
+  background-color: #20BA5A;
+}
+
+/* استجابة الموبايل */
+@media (max-width: 768px) {
+  body {
+    padding: 8px;
+  }
+  .realistic-book-casing {
+    flex-direction: column;
+    min-height: 90vh;
+  }
+  .book-index-sidebar {
+    width: 100%;
+    max-width: 100%;
+    border-left: none;
+    border-bottom: 1px solid var(--crease);
+    max-height: 40vh;
+  }
+  .book-spine-gutter {
+    display: none;
+  }
+  .book-page-canvas {
+    padding: 24px 18px;
+  }
+  .page-entry-title {
+    font-size: 1.8rem;
+  }
+  .page-entry-body {
+    font-size: 1.18rem;
+    line-height: 2;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   عزل تام لوضع القارئ لفصل واحد (Single Reader Mode Isolation)
+   مها ترى فقط نص الفصل وعنوانه وتاريخه، بدون أي فهرس أو عدد فصول أو أزرار تنقل
+   يختفي تماماً: الفهرس، كعب الكتاب، أزرار التنقل، أي زر، وأي رابط
+   ════════════════════════════════════════════════════════════════ */
+html.is-reader-single aside,
+html.is-reader-single .book-index-sidebar,
+html.is-reader-single #bookIndexSidebar,
+html.is-reader-single .book-spine-gutter,
+html.is-reader-single #bookSpineGutter,
+html.is-reader-single .page-nav-bar,
+html.is-reader-single #readerNavBar,
+html.is-reader-single #prevEntryBtn,
+html.is-reader-single #nextEntryBtn,
+html.is-reader-single .page-actions,
+html.is-reader-single #readerActions,
+html.is-reader-single #editorArea,
+html.is-reader-single #welcomeArea,
+html.is-reader-single #dedicationArea,
+html.is-reader-single #shareModal,
+html.is-reader-single .app-footer,
+html.is-reader-single footer,
+html.is-reader-single .chapter-share-btn,
+html.is-reader-single .print-btn,
+html.is-reader-single button,
+html.is-reader-single a,
+body.is-reader-single aside,
+body.is-reader-single .book-index-sidebar,
+body.is-reader-single #bookIndexSidebar,
+body.is-reader-single .book-spine-gutter,
+body.is-reader-single #bookSpineGutter,
+body.is-reader-single .page-nav-bar,
+body.is-reader-single #readerNavBar,
+body.is-reader-single #prevEntryBtn,
+body.is-reader-single #nextEntryBtn,
+body.is-reader-single .page-actions,
+body.is-reader-single #readerActions,
+body.is-reader-single #editorArea,
+body.is-reader-single #welcomeArea,
+body.is-reader-single #dedicationArea,
+body.is-reader-single #shareModal,
+body.is-reader-single .app-footer,
+body.is-reader-single footer,
+body.is-reader-single .chapter-share-btn,
+body.is-reader-single .print-btn,
+body.is-reader-single button,
+body.is-reader-single a {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+}
+
+html.is-reader-single .realistic-book-casing,
+body.is-reader-single .realistic-book-casing {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  display: flex !important;
+  justify-content: center !important;
+  min-height: auto !important;
+  padding: 0 !important;
+}
+
+html.is-reader-single .book-page-canvas,
+body.is-reader-single .book-page-canvas {
+  width: 100% !important;
+  max-width: 820px !important;
+  margin: 0 auto !important;
+  background: var(--bg-page) !important;
+  border: 1px solid var(--border-delicate) !important;
+  border-radius: var(--radius-casing) !important;
+  box-shadow: 0 10px 30px rgba(60, 45, 50, 0.05) !important;
+  padding: 44px 40px !important;
+}
+
+html.is-reader-single #readerArea,
+body.is-reader-single #readerArea {
+  display: block !important;
+}

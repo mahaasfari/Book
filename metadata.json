@@ -1,0 +1,8 @@
+{
+  "name": "رحلة اشتياق",
+  "description": "كتاب اليوميات الرقمي بتصميم كتاب ورقي واقعي وميزة المشاركة الآمنة للقراءة فقط وفق الثيم الرومانسي الهادئ",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>رحلة اشتياق - كتاب اليوميات الرقمي</title>
+  <meta name="description" content="كتاب يوميات رقمية ورقية راقية باللغة العربية بتصميم كتاب واقعي وميزة المشاركة الآمنة للقراءة فقط.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <script>
+    (function () {
+      try {
+        var href = window.location.href;
+        if (href.indexOf('read=single') !== -1 || href.indexOf('read%3Dsingle') !== -1) {
+          document.documentElement.className += ' is-reader-single';
+        } else if (href.indexOf('read=all') !== -1 || href.indexOf('read%3Dall') !== -1) {
+          document.documentElement.className += ' is-reader-all';
+        }
+      } catch (e) {}
+    })();
+  </script>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="book-viewport">
+
+    <!-- خط زخرفي رقيق في الأعلى بلمسة ناعمة 🌸 -->
+    <div class="top-delicate-ornament" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin: 4px auto 14px; opacity: 0.75;">
+      <span style="flex: 1; max-width: 140px; height: 1px; background: linear-gradient(to right, transparent, var(--dusty-rose-light), transparent);"></span>
+      <span style="color: var(--dusty-rose); font-size: 0.9rem;">🌸</span>
+      <span style="flex: 1; max-width: 140px; height: 1px; background: linear-gradient(to right, transparent, var(--dusty-rose-light), transparent);"></span>
+    </div>
+
+    <!-- شريط علوي هادئ يعرض عنوان الكتاب في وضع القارئ -->
+    <header id="readerHeader" class="reader-header" style="display: none; justify-content: center;">
+      <div class="reader-badge">
+        <span style="color: var(--dusty-rose);">🌿</span>
+        <span id="readerHeaderTitle">من كتاب رحلة اشتياق</span>
+      </div>
+    </header>
+
+    <!-- رسالة الخطأ في حال كان الرابط تالفاً أو فارغاً -->
+    <div id="readerErrorBox" class="reader-error-box" style="display: none;">
+      <div class="error-icon">⚠️</div>
+      <h3 class="font-literary error-title">تنبيه بخصوص الرابط</h3>
+      <p id="readerErrorMsg" class="error-msg">هذا الرابط لا يحتوي على أي محتوى.</p>
+    </div>
+    
+    <!-- الحافظة الورقية للكتاب المفتوح -->
+    <div class="realistic-book-casing" id="bookCasing">
+
+      <!-- ══════════════════════════════════════════════
+           1. القسم الأيمن: فهرس الكتاب (Sidebar - 30%)
+           ══════════════════════════════════════════════ -->
+      <aside class="book-index-sidebar" id="bookIndexSidebar">
+        <div class="index-header">
+          <div class="book-identity">
+            <h1 class="book-cover-title" id="bookTitle">رحلة اشتياق</h1>
+            <p class="book-cover-sub" id="bookSubtitle">أوراق كُتبت في غيابك، لتُقرأ في حضورك</p>
+          </div>
+
+          <!-- زر إضافة مذكرة جديدة (يختفي تماماً في وضع القارئ) -->
+          <button class="ribbon-add-btn" id="newEntryBtn">
+            <span>+ إضافة مذكرة جديدة</span>
+          </button>
+
+          <!-- شريط بحث الفهرس -->
+          <div class="index-search-box">
+            <input type="text" id="searchInput" placeholder="بحث في الفهرس...">
+          </div>
+        </div>
+
+        <!-- قائمة فصول الفهرس مرتبة من الأحدث للأقدم -->
+        <div class="index-entries-list" id="indexEntriesList"></div>
+
+        <!-- أسفل الفهرس: الأدوات الهادئة والمشاركة -->
+        <div class="index-footer" id="indexFooter">
+          <button class="index-util-btn" id="mahaReaderBtn" title="رابط قراءة مها لفصل مستقل">
+            <span>🌿 رابط قراءة مها</span>
+          </button>
+          <button class="index-util-btn" id="shareAllBookBtn" title="مشاركة الكتاب كامل للقراءة فقط">
+            <span>🔗 مشاركة الكتاب</span>
+          </button>
+          <button class="index-util-btn" id="dedicationBtn">
+            <span>🌿 الإهداء</span>
+          </button>
+          <button class="index-util-btn" id="backupBtn">
+            <span>نسخ احتياطي</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- ══════════════════════════════════════════════
+           2. كعب الكتاب (Spine crease)
+           ══════════════════════════════════════════════ -->
+      <div class="book-spine-gutter" id="bookSpineGutter"></div>
+
+      <!-- ══════════════════════════════════════════════
+           3. القسم الأيسر: صفحات الكتاب (Pages Canvas - 70%)
+           ══════════════════════════════════════════════ -->
+      <main class="book-page-canvas">
+
+        <!-- أ. وضع القراءة (عند اختيار فصل) -->
+        <div id="readerArea" class="page-content-wrapper" style="display: none;">
+          <div>
+            <div class="page-top-bar">
+              <div class="page-date" id="readerDate">الأحد، 7 أكتوبر 2026</div>
+              <div class="page-actions" id="readerActions">
+                <button class="action-link" id="shareSingleChapterBtn" title="مشاركة هذا الفصل فقط">
+                  <span>🔗 مشاركة الفصل</span>
+                </button>
+                <button class="action-link" id="editCurrentEntryBtn">تعديل</button>
+                <button class="action-link text-danger" id="deleteCurrentEntryBtn">حذف</button>
+              </div>
+            </div>
+
+            <h2 class="page-entry-title" id="readerTitle">أروقة قسم الباطنة</h2>
+
+            <div class="page-divider">
+              <span></span>
+              <small>🌿</small>
+              <span></span>
+            </div>
+
+            <article class="page-entry-body" id="readerContent"></article>
+          </div>
+
+          <div class="page-nav-bar" id="readerNavBar">
+            <button class="page-turn-btn" id="prevEntryBtn">← الفصل السابق</button>
+            <span id="readerWordCount" style="font-size: 0.8rem; color: var(--ink-muted);"></span>
+            <button class="page-turn-btn" id="nextEntryBtn">الفصل التالي →</button>
+          </div>
+        </div>
+
+        <!-- ب. وضع التعديل والكتابة على الورق (للمالك فقط) -->
+        <div id="editorArea" class="page-content-wrapper" style="display: none;">
+          <div>
+            <div class="page-top-bar">
+              <span class="page-date" id="editorDateText">الأحد، 7 أكتوبر 2026</span>
+              <span class="autosave-tag" id="autosaveIndicator">يتم الحفظ تلقائياً كل 5 ثوانٍ</span>
+            </div>
+
+            <input type="text" id="editorTitleInput" class="paper-title-input" placeholder="عنوان اليوم...">
+
+            <textarea id="editorContentTextarea" class="paper-body-textarea" placeholder="اكتب ما تشعر به هنا..."></textarea>
+          </div>
+
+          <div class="editor-buttons-row">
+            <button class="btn-cancel" id="cancelEditBtn">إلغاء</button>
+            <button class="btn-save-rose" id="saveEntryBtn">حفظ في الكتاب</button>
+          </div>
+        </div>
+
+        <!-- ج. وضع الترحيب (عند عدم اختيار أي فصل) -->
+        <div id="welcomeArea" class="page-content-wrapper" style="text-align: center; justify-content: center; padding: 60px 20px;">
+          <div style="font-size: 2.5rem; margin-bottom: 12px; color: var(--dusty-rose);">🌿</div>
+          <h2 class="font-literary" style="font-size: 2.2rem; color: var(--ink-primary); margin-bottom: 8px;">
+            اختر فصلاً من الفهرس لتبدأ القراءة
+          </h2>
+          <p id="welcomeSubtext" style="color: var(--ink-secondary); font-size: 0.95rem; max-width: 420px; margin: 0 auto 20px;">
+            أو اضغط على زر "+ إضافة مذكرة جديدة" في الفهرس لتدوين خواطر هذا اليوم في رحلتك.
+          </p>
+        </div>
+
+        <!-- د. وضع صفحة الإهداء -->
+        <div id="dedicationArea" class="page-content-wrapper" style="display: none; text-align: center; justify-content: center; padding: 40px 20px;">
+          <div style="font-size: 2rem; margin-bottom: 12px; color: var(--dusty-rose);">🌿</div>
+          <h2 class="font-literary" id="dedicationRecipientText" style="font-size: 2.2rem; margin-bottom: 16px;">
+            إلى العزيز الغائب الحاضر
+          </h2>
+          <div class="page-divider">
+            <span></span>
+            <small>🕊️</small>
+            <span></span>
+          </div>
+          <p class="font-literary" id="dedicationContentText" style="font-size: 1.4rem; line-height: 2.3; max-width: 520px; margin: 24px auto; color: var(--ink-primary);"></p>
+          <button id="backToBookBtn" class="btn-cancel" style="margin-top: 18px; display: none;">🌿 عودة إلى كتابي</button>
+        </div>
+
+      </main>
+
+    </div>
+
+    <!-- فوتر الكتاب -->
+    <footer style="text-align: center; margin-top: 16px; font-size: 0.85rem; color: var(--ink-muted);">
+      <div class="font-literary" style="color: var(--dusty-rose); font-size: 1rem;">كُتب بصدق... 💭</div>
+      <div>كتاب اليوميات الرقمية الورقي · خصوصية تامة بدون خوادم</div>
+    </footer>
+
+  </div>
+
+  <!-- ── نافذة المشاركة (Share Modal) ── -->
+  <div class="modal-overlay" id="shareModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="shareModalTitle">مشاركة الرابط</h3>
+        <button class="modal-close-btn" id="closeShareModalBtn">✕</button>
+      </div>
+
+      <div class="share-info-box" id="shareInfoBox">
+        هذا الرابط يعرض الكتاب للقراءة فقط بدون إمكانية التعديل.
+      </div>
+
+      <div class="share-input-group">
+        <label class="share-label">رابط القراءة المشفر (يعمل بدون إنترنت وبخصوصية تامة):</label>
+        <input type="text" id="shareUrlInput" class="share-url-field" readonly>
+      </div>
+
+      <div class="share-actions-row">
+        <button class="btn-copy-rose" id="copyShareUrlBtn">
+          <span>نسخ الرابط</span>
+        </button>
+        <button class="btn-whatsapp" id="whatsappShareBtn">
+          <span>مشاركة عبر واتساب</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── نافذة رابط قراءة مها ── -->
+  <div class="modal-overlay" id="mahaModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">🌿 رابط قراءة مها</h3>
+        <button class="modal-close-btn" id="closeMahaModalBtn">✕</button>
+      </div>
+
+      <div class="share-input-group">
+        <label class="share-label">اختر الفصل المراد إهداؤه لمها:</label>
+        <select id="mahaChapterSelect" class="share-url-field" style="direction: rtl; font-family: inherit; font-size: 0.9rem; padding: 8px;"></select>
+      </div>
+
+      <div class="share-info-box">
+        💡 <strong>هذا الرابط يعرض هذا الفصل فقط.</strong><br>
+        ستفتح مها الرابط لترى هذه الصفحة وحدها، بدون فهرس وبدون أزرار وبدون معرفة وجود أي فصول أخرى.
+      </div>
+
+      <div class="share-input-group">
+        <label class="share-label">رابط القراءة المشفر:</label>
+        <input type="text" id="mahaShareUrlInput" class="share-url-field" readonly>
+      </div>
+
+      <div class="share-actions-row">
+        <button class="btn-copy-rose" id="copyMahaShareUrlBtn">
+          <span>نسخ الرابط</span>
+        </button>
+        <button class="btn-whatsapp" id="whatsappMahaBtn">
+          <span>مشاركة عبر واتساب</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
